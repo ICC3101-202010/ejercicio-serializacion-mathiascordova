@@ -13,9 +13,9 @@ namespace Prueba_Serialization
     {
         static void Main(string[] args)
         {
-            List<Persona> listPersona;
+            List<Persona> listPersona = new List<Persona>();
 
-            void Almacenar(Persona persona)
+            void Almacenar(List<Persona> persona)
             {
                 IFormatter formatter = new BinaryFormatter();
                 Stream stream = new FileStream("PerSave.bin", FileMode.Create, FileAccess.Write, FileShare.None);
@@ -24,13 +24,16 @@ namespace Prueba_Serialization
             }
             void Cargar()
             {
-
+                IFormatter formatter = new BinaryFormatter();
+                Stream stream = new FileStream("PerSave.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
+                List<Persona> list = (List<Persona>)formatter.Deserialize(stream);
+                stream.Close();
             }
             
 
             while (true)
             {
-                Console.WriteLine("1. Crear Persona" + Environment.NewLine + "2. Ver Personas" + Environment.NewLine + "x. Salir");
+                Console.WriteLine("1. Crear Persona" + Environment.NewLine + "2. Ver Personas" + Environment.NewLine + "3. Cargar Personas" + Environment.NewLine + "x. Salir");
                 string choice = Console.ReadLine();
 
                 if (choice == "x"||choice == "X")
@@ -47,7 +50,15 @@ namespace Prueba_Serialization
                     Console.Write("Dame Edad: ");
                     int Age = Int32.Parse(Console.ReadLine());
                     Persona per = new Persona(Name,Surname,Age);
+                    listPersona.Add(per);
                     
+                }
+                else if (choice == "2")
+                {
+                    for (int i = 0; i < listPersona.Count(); i++)
+                    {
+                        
+                    }
                 }
             }
 
